@@ -5,13 +5,13 @@
  */
 package nexus.java.dao;
 
-import java.sql.Connection;
 import java.util.List;
-import nexus.java.utils.Cnx;
 
 /**
  *
  * @author MaruLanD
+ * @param <E> Class
+ * @param <I> Id
  */
 public interface UtilDao<E, I> {
 
