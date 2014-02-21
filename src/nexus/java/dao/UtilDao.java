@@ -5,14 +5,16 @@
  */
 package nexus.java.dao;
 
+import java.sql.Connection;
 import java.util.List;
+import nexus.java.utils.Cnx;
 
 /**
  *
  * @author MaruLanD
  */
 public interface UtilDao<E, I> {
-    
+
     public boolean insert(E obj);
 
     public boolean update(E obj);
