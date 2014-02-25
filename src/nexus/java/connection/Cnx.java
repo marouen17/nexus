@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nexus.java.utils;
+package nexus.java.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,9 +16,9 @@ import java.sql.SQLException;
 public final class Cnx {
 
     private Connection dbCnx;
-    private String user = "";
-    private String password = "";
-    private String url = "jdbc:mysql://localhost:3306/---";
+    private final String user = "root";
+    private final String password = "rootroot";
+    private final String url = "jdbc:mysql://localhost:3306/sosAnimaux";
     private static Cnx instance = null;
 
     private Cnx() {

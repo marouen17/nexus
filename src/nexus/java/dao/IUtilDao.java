@@ -13,7 +13,7 @@ import java.util.List;
  * @param <E> Class
  * @param <I> Id
  */
-public interface UtilDao<E, I> {
+public interface IUtilDao<E, I> {
 
     public boolean insert(E obj);
 

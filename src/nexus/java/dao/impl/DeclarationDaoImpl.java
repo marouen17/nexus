@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nexus.java.dao.daoImpl;
+package nexus.java.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,15 +12,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import nexus.java.dao.UtilDao;
+import nexus.java.dao.IUtilDao;
 import nexus.java.entity.Declaration;
-import nexus.java.utils.Cnx;
+import nexus.java.connection.Cnx;
+import nexus.java.dao.IDeclarationDao;
 
 /**
  *
  * @author MaruLanD
  */
-public class DeclarationDao implements UtilDao<Declaration, Integer> {
+public class DeclarationDaoImpl implements IDeclarationDao {
 
     private final Connection cnx = Cnx.getInstance().getConnection();
 

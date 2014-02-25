@@ -6,7 +6,7 @@
 package nexus.java.business;
 
 import java.util.List;
-import nexus.java.dao.daoImpl.DeclarationDao;
+import nexus.java.dao.impl.DeclarationDaoImpl;
 import nexus.java.entity.Declaration;
 
 /**
@@ -15,7 +15,7 @@ import nexus.java.entity.Declaration;
  */
 public class DeclarationBo {
 
-    private DeclarationDao declarationDao;
+    private DeclarationDaoImpl declarationDao;
 
     public boolean insert(Declaration obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
