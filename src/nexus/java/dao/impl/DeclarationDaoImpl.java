@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import nexus.java.dao.IUtilDao;
 import nexus.java.entity.Declaration;
 import nexus.java.connection.Cnx;
 import nexus.java.dao.IDeclarationDao;
@@ -57,7 +56,7 @@ public class DeclarationDaoImpl implements IDeclarationDao {
     @Override
     public boolean update(Declaration obj) {
         String sql = "update declaration set "
-                    + "Lieu_Declaration=?,Etat=?,Commentaire=? where id_declaration=?";
+                + "Lieu_Declaration=?,Etat=?,Commentaire=? where id_declaration=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(sql);
 
@@ -74,7 +73,7 @@ public class DeclarationDaoImpl implements IDeclarationDao {
             }
 
         } catch (SQLException ex) {
-             ex.printStackTrace();
+            ex.printStackTrace();
         }
         return false;
 
@@ -82,7 +81,24 @@ public class DeclarationDaoImpl implements IDeclarationDao {
 
     @Override
     public boolean delete(Declaration obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "delete from declaration where id_declaration=?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(sql);
+
+            ps.setInt(1, obj.getIdDeclaration());
+
+            int var = ps.executeUpdate();
+            if (var == 0) {
+                return false;
+            } else {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+
     }
 
     @Override
