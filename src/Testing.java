@@ -1,5 +1,5 @@
 
-import nexus.java.gui.DeclarationAddForm;
+import nexus.java.gui.DeclarationAddUpdateForm;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,7 +15,7 @@ public class Testing {
 
     public static void main(String[] args) {
 
-        DeclarationAddForm addForm=new DeclarationAddForm();
+        DeclarationAddUpdateForm addForm=new DeclarationAddUpdateForm();
         addForm.setVisible(true);
     }
 }
