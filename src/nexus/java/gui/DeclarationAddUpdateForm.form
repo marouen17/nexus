@@ -20,6 +20,12 @@
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.ButtonGroup" name="BGSexe">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.ButtonGroup()"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="BGSexe.add(jRBFem);&#xa;BGSexe.add(jRBMal);"/>
+      </AuxValues>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -335,6 +341,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Male"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jRBMal.setSelected(true);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFAge">
         </Component>
@@ -399,6 +408,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ajouter"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAddActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jBCancel">
       <Properties>

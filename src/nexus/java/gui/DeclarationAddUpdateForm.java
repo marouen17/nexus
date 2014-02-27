@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package nexus.java.gui;
+
+import javax.swing.JOptionPane;
+import nexus.java.business.AnimalBo;
+import nexus.java.business.DeclarationBo;
+import nexus.java.entity.Animal;
+import nexus.java.entity.Declaration;
 
 /**
  *
@@ -12,12 +17,12 @@ package nexus.java.gui;
  */
 public class DeclarationAddUpdateForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DeclarationAddForm
-     */
+    private DeclarationBo declarationBo = new DeclarationBo();
+    private AnimalBo animalBo = new AnimalBo();
+
     public DeclarationAddUpdateForm() {
         initComponents();
-        
+
     }
 
     /**
@@ -30,6 +35,7 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
+        BGSexe = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -77,6 +83,9 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        BGSexe.add(jRBFem);
+        BGSexe.add(jRBMal);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Lieux de l'animal: ");
@@ -111,6 +120,7 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
         jRBFem.setText("Female");
 
         jRBMal.setText("Male");
+        jRBMal.setSelected(true);
 
         jBImg.setText("Parcourir");
         jBImg.setPreferredSize(new java.awt.Dimension(75, 20));
@@ -257,6 +267,11 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
         );
 
         jBAdd.setText("Ajouter");
+        jBAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAddActionPerformed(evt);
+            }
+        });
 
         jBCancel.setText("Annuler");
         jBCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -298,6 +313,36 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBCancelActionPerformed
 
+    private void jBAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddActionPerformed
+        Animal animal = new Animal();
+        Declaration declaration = new Declaration();
+
+        try {
+            animal.setAge(Integer.parseInt(jTFAge.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Vous ne pouvez saisir que des chiffres", "Erreur", JOptionPane.ERROR_MESSAGE);
+            jTFAge.setText("");
+        }
+        animal.setCommentaire(jTextArea1.getText());
+        animal.setCouleur(jTFCouleur.getText());
+        animal.setEspece(jTFEspece.getText());
+        if (jRBMal.isSelected()) {
+            animal.setSexe("Male");
+        } else {
+            animal.setSexe("Female");
+        }
+        animal.setTaille(jTFTaille.getText());
+        animal.setType(jCBType.getSelectedItem().toString());
+
+        String errors = animalBo.verifAnimal(animal);
+        if (errors == null) {
+            animalBo.insert(animal);
+        } else {
+            JOptionPane.showMessageDialog(null, "Veuillez revérifier les champs suivants: \n" + errors, "Erreur", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_jBAddActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -334,6 +379,7 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup BGSexe;
     private javax.swing.JButton jBAdd;
     private javax.swing.JButton jBCancel;
     private javax.swing.JButton jBImg;
