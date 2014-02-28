@@ -24,23 +24,20 @@ public class AnimalDaoImpl implements IAnimalDao {
     @Override
     public boolean insert(Animal a) {
 
-        String requete = "insert into animal (espece,couleur,type,taille,age,image,sexe,commentaire) values (?,?,?,?,?,?,?,?)";
+        String requete = "insert into animal (espece,couleur,type,taille,age,sexe,commentaire) values (?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = cnx.prepareStatement(requete);
             ps.setString(1, a.getEspece());
             ps.setString(2, a.getCouleur());
             ps.setString(3, a.getType());
             ps.setString(4, a.getTaille());
-            ps.setInt(5, a.getAge());
-            ps.setBlob(6, new InputStream() {
-
-                @Override
-                public int read() throws IOException {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-            });//a.getImage());
-            ps.setString(7, a.getSexe());
-            ps.setString(8, a.getCommentaire());
+            if (a.getAge() != null) {
+                ps.setInt(5, a.getAge());
+            } else {
+                ps.setObject(5, null);
+            }
+            ps.setString(6, a.getSexe());
+            ps.setString(7, a.getCommentaire());
             ps.executeUpdate();
             System.out.println("Ajout effectuée avec succès");
         } catch (SQLException ex) {
@@ -52,26 +49,23 @@ public class AnimalDaoImpl implements IAnimalDao {
 
     @Override
     public boolean update(Animal a) {
-        String requete = "update  animal set espece=?,couleur=?,type=?,taille=?,age=?,image=?,sexe=?,commentaire=? where id_animal=?";
+        String requete = "update  animal set espece=?,couleur=?,type=?,taille=?,age=?,sexe=?,commentaire=? where id_animal=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(requete);
             ps.setString(1, a.getEspece());
             ps.setString(2, a.getCouleur());
             ps.setString(3, a.getType());
             ps.setString(4, a.getTaille());
-            ps.setInt(5, a.getAge());
-            ps.setBlob(6, new InputStream() {
-
-                @Override
-                public int read() throws IOException {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-            });//a.getImage());
-            ps.setString(7, a.getSexe());
-            ps.setString(8, a.getCommentaire());
-            ps.setInt(9, a.getIdAnimal());
+            if (a.getAge() != null) {
+                ps.setInt(5, a.getAge());
+            } else {
+                ps.setObject(5, null);
+            }
+            ps.setString(6, a.getSexe());
+            ps.setString(7, a.getCommentaire());
+            ps.setInt(8, a.getIdAnimal());
             ps.executeUpdate();
-            System.out.println("Ajout effectuée avec succès");
+            System.out.println("modification effectuée avec succès");
         } catch (SQLException ex) {
             //Logger.getLogger(PersonneDao.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("erreur lors de l'insertion " + ex.getMessage());
@@ -117,6 +111,22 @@ public class AnimalDaoImpl implements IAnimalDao {
             ex.printStackTrace();
         }
         return animals;
+    }
+
+    @Override
+    public Integer getMaxID() {
+        String sql = "select id_animal from animal order by id_animal desc";
+        Statement st;
+        try {
+            st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            rs.next();
+            return rs.getInt(1);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override

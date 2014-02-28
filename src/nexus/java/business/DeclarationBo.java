@@ -6,10 +6,12 @@
 package nexus.java.business;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import nexus.java.dao.IAnimalDao;
 import nexus.java.dao.IDeclarationDao;
 import nexus.java.dao.impl.AnimalDaoImpl;
 import nexus.java.dao.impl.DeclarationDaoImpl;
+import nexus.java.entity.Animal;
 import nexus.java.entity.Declaration;
 
 /**
@@ -21,25 +23,69 @@ public class DeclarationBo {
     private IDeclarationDao declarationDao = new DeclarationDaoImpl();
     private IAnimalDao animalDao = new AnimalDaoImpl();
 
-    public boolean insert(Declaration obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean veriflieux(String lieux) {
+        if (lieux.equals(null) || lieux.equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean verifeEtat(String etat) {
+        if (etat.equals(null) || etat.equals("")) {
+            return false;
+        } else {
+            return true;
+        }
 
     }
 
-    public boolean update(Declaration obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public String verifDeclaration(Declaration d) {
+        String errors = null;
+        if (!veriflieux(d.getLieuDeclaration())) {
+            errors += "-Lieu de déclaration\n";
+        }
+        if (!verifeEtat(d.getEtat())) {
+            errors += "-Etat de l'animal\n";
+        }
+        
+
+        return errors;
+    }
+
+    public void insert(Declaration d,Animal a) {
+        
+        if (animalDao.insert(a)) {
+                d.setIdAnimal(animalDao.getMaxID());
+                declarationDao.insert(d);
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de l'ajout", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        
+    }
+
+    public void update(Declaration d,Animal a) {
+         if (animalDao.update(a)&&declarationDao.update(d)) {
+                
+                System.out.println("ddd");
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de la modification", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
     }
 
     public boolean delete(Declaration obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return declarationDao.delete(obj);
     }
 
     public List<Declaration> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return declarationDao.readAll();
     }
 
     public Declaration readByID(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return declarationDao.readByID(id);
     }
 
 }

@@ -28,16 +28,24 @@ public class DeclarationDaoImpl implements IDeclarationDao {
     public boolean insert(Declaration obj) {
         try {
             PreparedStatement ps = cnx.prepareStatement("insert "
-                    + "into declaration(id_declaration,Id_Membre,Id_Animal,"
-                    + "Lieu_Declaration,Etat,Commentaire,Type) values(?,?,?,?,?,?,?)");
+                    + "into declaration(Id_Membre,Id_Animal,"
+                    + "Lieu_Declaration,Etat,Commentaire,Type) values(?,?,?,?,?,?)");
 
-            ps.setInt(1, obj.getIdDeclaration());
-            ps.setInt(2, obj.getIdMembre());
-            ps.setInt(3, obj.getIdAnimal());
-            ps.setString(4, obj.getLieuDeclaration());
-            ps.setString(5, obj.getEtat());
-            ps.setString(6, obj.getCommentaire());
-            ps.setShort(7, obj.getType());
+           
+            if (obj.getIdMembre() != null) {
+                ps.setInt(1, obj.getIdMembre());
+            } else {
+                ps.setObject(1, null);
+            }
+            if (obj.getIdAnimal() != null) {
+                ps.setInt(2, obj.getIdAnimal());
+            } else {
+                ps.setObject(2, null);
+            }
+            ps.setString(3, obj.getLieuDeclaration());
+            ps.setString(4, obj.getEtat());
+            ps.setString(5, obj.getCommentaire());
+            ps.setShort(6,obj.getType());
 
             int var = ps.executeUpdate();
             if (var == 0) {
@@ -69,7 +77,9 @@ public class DeclarationDaoImpl implements IDeclarationDao {
             if (var == 0) {
                 return false;
             } else {
+                System.out.println("aaa");
                 return true;
+                
             }
 
         } catch (SQLException ex) {

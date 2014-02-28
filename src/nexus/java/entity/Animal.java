@@ -1,40 +1,47 @@
-
 package nexus.java.entity;
 
 import java.util.Objects;
 
+public class Animal {
 
-public class Animal  {
+    private int idAnimal;
+    private String espece;
+    private String couleur;
+    private String type;
+    private String taille;
+    private Integer age;
+    private byte[] image;
+    private String sexe;
+    private String commentaire;
+    private int idMembre;
 
-	private int idAnimal;
-	private String espece;
-	private String couleur;
-	private String type;
-	private String taille;
-	private Integer age;
-	private byte[] image;
-	private String sexe;
-	private String commentaire;
+    public int getIdMembre() {
+        return idMembre;
+    }
 
-	public Animal() {
-	}
+    public void setIdMembre(int idMembre) {
+        this.idMembre = idMembre;
+    }
 
-	public Animal(int idAnimal) {
-		this.idAnimal = idAnimal;
-	}
+    public Animal() {
+    }
 
-	public Animal(int idAnimal, String espece, String couleur, String type, String taille, Integer age, byte[] image,
-			String sexe, String commentaire) {
-		this.idAnimal = idAnimal;
-		this.espece = espece;
-		this.couleur = couleur;
-		this.type = type;
-		this.taille = taille;
-		this.age = age;
-		this.image = image;
-		this.sexe = sexe;
-		this.commentaire = commentaire;
-	}
+    public Animal(int idAnimal) {
+        this.idAnimal = idAnimal;
+    }
+
+    public Animal(int idAnimal, String espece, String couleur, String type, String taille, Integer age, byte[] image,
+            String sexe, String commentaire) {
+        this.idAnimal = idAnimal;
+        this.espece = espece;
+        this.couleur = couleur;
+        this.type = type;
+        this.taille = taille;
+        this.age = age;
+        this.image = image;
+        this.sexe = sexe;
+        this.commentaire = commentaire;
+    }
 
     public int getIdAnimal() {
         return idAnimal;
@@ -138,6 +145,4 @@ public class Animal  {
         return true;
     }
 
-
-	
 }

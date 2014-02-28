@@ -79,27 +79,30 @@ public class AnimalBo {
     }
 
     public boolean insert(Animal obj) {
-        animalDao.insert(obj);
-        return true;
+
+        return animalDao.insert(obj);
 
     }
 
     public boolean update(Animal obj) {
-        animalDao.update(obj);
-        return true;
+
+        return animalDao.update(obj);
     }
 
     public boolean delete(Animal obj) {
-        animalDao.delete(obj);
-        return true;
+        return animalDao.delete(obj);
+
     }
 
     public List<Animal> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return animalDao.readAll();
     }
 
     public Animal readByID(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return animalDao.readByID(id);
     }
 
+    public Integer getMaxID() {
+        return animalDao.getMaxID();
+    }
 }
