@@ -9,6 +9,18 @@ public class AnimalBo {
 
     private IAnimalDao animalDao = new AnimalDaoImpl();
 
+    private static AnimalBo instance = null;
+
+    private AnimalBo() {
+    }
+
+    public static AnimalBo getInstance() {
+        if (instance == null) {
+            instance = new AnimalBo();
+        }
+        return instance;
+    }
+
     public boolean verifAge(Integer age) {
         if ((age == null)) {
             return false;

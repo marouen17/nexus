@@ -14,5 +14,5 @@ import nexus.java.entity.Animal;
  */
 public interface IAnimalDao extends IUtilDao<Animal, Integer>{
     
-    public Integer getMaxID ();
+    public int getMaxID ();
 }

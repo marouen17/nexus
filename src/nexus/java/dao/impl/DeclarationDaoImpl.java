@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import nexus.java.entity.Declaration;
 import nexus.java.connection.Cnx;
+import nexus.java.dao.IAnimalDao;
 import nexus.java.dao.IDeclarationDao;
 
 /**
@@ -32,13 +33,13 @@ public class DeclarationDaoImpl implements IDeclarationDao {
                     + "Lieu_Declaration,Etat,Commentaire,Type) values(?,?,?,?,?,?)");
 
            
-            if (obj.getIdMembre() != null) {
-                ps.setInt(1, obj.getIdMembre());
+            if (obj.getMembre() != null) {
+                ps.setInt(1, obj.getMembre());
             } else {
                 ps.setObject(1, null);
             }
-            if (obj.getIdAnimal() != null) {
-                ps.setInt(2, obj.getIdAnimal());
+            if (obj.getAnimal() != null) {
+                ps.setInt(2, obj.getAnimal().getIdAnimal());
             } else {
                 ps.setObject(2, null);
             }
@@ -113,13 +114,14 @@ public class DeclarationDaoImpl implements IDeclarationDao {
 
     @Override
     public List<Declaration> readAll() {
+        IAnimalDao animalDao=new AnimalDaoImpl();
         List<Declaration> declarations = new ArrayList<Declaration>();
         try {
             Statement st = cnx.createStatement();
             String sql = "select * from declaration";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                Declaration declaration = new Declaration(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4),
+                Declaration declaration = new Declaration(rs.getInt(1), rs.getInt(2), animalDao.readByID(rs.getInt(3)), rs.getString(4),
                         rs.getString(5), rs.getString(6), rs.getShort(7));
                 declarations.add(declaration);
             }
@@ -132,6 +134,7 @@ public class DeclarationDaoImpl implements IDeclarationDao {
 
     @Override
     public Declaration readByID(Integer id) {
+        IAnimalDao animalDao=new AnimalDaoImpl();
         Declaration d = null;
         String sql = "select * from declaration where id_declaration=" + id;
         Statement st;
@@ -139,7 +142,7 @@ public class DeclarationDaoImpl implements IDeclarationDao {
             st = cnx.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                d = new Declaration(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4),
+                d = new Declaration(rs.getInt(1), rs.getInt(2), animalDao.readByID(rs.getInt(3)), rs.getString(4),
                         rs.getString(5), rs.getString(6), rs.getShort(7));
             }
         } catch (SQLException ex) {
@@ -147,6 +150,22 @@ public class DeclarationDaoImpl implements IDeclarationDao {
         }
 
         return d;
+    }
+
+    @Override
+    public int getMaxID() {
+        String sql = "select id_declaration from declaration order by id_declaration desc";
+        Statement st;
+        try {
+            st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            rs.next();
+            return rs.getInt(1);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
 
 }

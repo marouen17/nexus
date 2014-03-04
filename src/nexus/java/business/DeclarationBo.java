@@ -23,6 +23,18 @@ public class DeclarationBo {
     private IDeclarationDao declarationDao = new DeclarationDaoImpl();
     private IAnimalDao animalDao = new AnimalDaoImpl();
 
+    private static DeclarationBo instance = null;
+
+    private DeclarationBo() {
+    }
+
+    public static DeclarationBo getInstance() {
+        if (instance == null) {
+            instance = new DeclarationBo();
+        }
+        return instance;
+    }
+
     public boolean veriflieux(String lieux) {
         if (lieux.equals(null) || lieux.equals("")) {
             return false;
@@ -40,7 +52,6 @@ public class DeclarationBo {
 
     }
 
-    
     public String verifDeclaration(Declaration d) {
         String errors = null;
         if (!veriflieux(d.getLieuDeclaration())) {
@@ -49,31 +60,27 @@ public class DeclarationBo {
         if (!verifeEtat(d.getEtat())) {
             errors += "-Etat de l'animal\n";
         }
-        
 
         return errors;
     }
 
-    public void insert(Declaration d,Animal a) {
-        
+    public void insert(Declaration d, Animal a) {
+
         if (animalDao.insert(a)) {
-                d.setIdAnimal(animalDao.getMaxID());
-                declarationDao.insert(d);
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de l'ajout", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-        
+            d.setAnimal(new Animal(animalDao.getMaxID()));
+            declarationDao.insert(d);
+        } else {
+            JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de l'ajout", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
-    public void update(Declaration d,Animal a) {
-         if (animalDao.update(a)&&declarationDao.update(d)) {
-                
-                System.out.println("ddd");
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de la modification", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
+    public void update(Declaration d, Animal a) {
+        if (animalDao.update(a) && declarationDao.update(d)) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de la modification", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public boolean delete(Declaration obj) {
@@ -86,6 +93,10 @@ public class DeclarationBo {
 
     public Declaration readByID(Integer id) {
         return declarationDao.readByID(id);
+    }
+
+    public int getMaxID() {
+        return declarationDao.getMaxID();
     }
 
 }

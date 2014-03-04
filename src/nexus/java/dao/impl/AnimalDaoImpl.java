@@ -114,7 +114,7 @@ public class AnimalDaoImpl implements IAnimalDao {
     }
 
     @Override
-    public Integer getMaxID() {
+    public int getMaxID() {
         String sql = "select id_animal from animal order by id_animal desc";
         Statement st;
         try {
@@ -126,7 +126,7 @@ public class AnimalDaoImpl implements IAnimalDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     @Override

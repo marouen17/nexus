@@ -12,8 +12,8 @@ package nexus.java.entity;
 public class Declaration {
 
     private int idDeclaration;
-    private Integer idMembre;
-    private Integer idAnimal;
+    private Integer membre;
+    private Animal animal;
     private String lieuDeclaration;
     private String etat;
     private String commentaire;
@@ -26,11 +26,11 @@ public class Declaration {
         this.idDeclaration = idDeclaration;
     }
 
-    public Declaration(int idDeclaration, Integer idMembre, Integer idAnimal, String lieuDeclaration, String etat,
+    public Declaration(int idDeclaration, Integer idMembre, Animal animal, String lieuDeclaration, String etat,
             String commentaire, Short type) {
         this.idDeclaration = idDeclaration;
-        this.idMembre = idMembre;
-        this.idAnimal = idAnimal;
+        this.membre = idMembre;
+        this.animal = animal;
         this.lieuDeclaration = lieuDeclaration;
         this.etat = etat;
         this.commentaire = commentaire;
@@ -45,20 +45,20 @@ public class Declaration {
         this.idDeclaration = idDeclaration;
     }
 
-    public Integer getIdMembre() {
-        return this.idMembre;
+    public Integer getMembre() {
+        return this.membre;
     }
 
-    public void setIdMembre(Integer idMembre) {
-        this.idMembre = idMembre;
+    public void setMembre(Integer idMembre) {
+        this.membre = idMembre;
     }
 
-    public Integer getIdAnimal() {
-        return this.idAnimal;
+    public Animal getAnimal() {
+        return this.animal;
     }
 
-    public void setIdAnimal(Integer idAnimal) {
-        this.idAnimal = idAnimal;
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
     }
 
     public String getLieuDeclaration() {

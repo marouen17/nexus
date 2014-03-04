@@ -5,6 +5,7 @@
  */
 package nexus.java.gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import nexus.java.business.AnimalBo;
 import nexus.java.business.DeclarationBo;
@@ -16,25 +17,28 @@ import nexus.java.entity.Declaration;
  * @author MaruLanD
  */
 public class DeclarationAddUpdateForm extends javax.swing.JFrame {
-    
-    private DeclarationBo declarationBo = new DeclarationBo();
-    private AnimalBo animalBo = new AnimalBo();
+
+    private DeclarationBo declarationBo = DeclarationBo.getInstance();
+    private AnimalBo animalBo = AnimalBo.getInstance();
     private boolean ifAdd = true;
-    
+
     Animal animal = new Animal();
     Declaration declaration = new Declaration();
-    
+
     public DeclarationAddUpdateForm() {
         initComponents();
-        
+        jTFIdAnimal.setText((animalBo.getMaxID()+1)+"");
+        jTFIdRec.setText((declarationBo.getMaxID()+1)+"");
+
     }
-    
+
     public DeclarationAddUpdateForm(int id) {
-        
+
         declaration = declarationBo.readByID(id);
-        animal = animalBo.readByID(declaration.getIdAnimal());
-        
+        animal = declaration.getAnimal();
+
         initComponents();
+        jTFIdAnimal.setText(animal.getIdAnimal() + "");
         jTFAge.setText(animal.getAge() + "");
         jTextArea1.setText(animal.getCommentaire());
         jTFCouleur.setText(animal.getCouleur());
@@ -46,13 +50,14 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
         }
         jTFTaille.setText(animal.getTaille());
         jCBType.setSelectedItem(animal.getType());
+        jTFIdRec.setText(declaration.getIdDeclaration() + "");
         jTAComm.setText(declaration.getCommentaire());
         jTFEtat.setText(declaration.getEtat());
         jTFLieux.setText(declaration.getLieuDeclaration());
-        
-        ifAdd=false;
+
+        ifAdd = false;
         jBAdd.setText("Modifier");
-        
+
     }
 
     /**
@@ -116,6 +121,7 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
         BGSexe.add(jRBMal);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("icon.jpg")).getImage());
         setResizable(false);
 
         jLabel1.setText("Lieux de l'animal: ");
@@ -340,7 +346,8 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        new MainDeclarationForm().setVisible(true);
     }//GEN-LAST:event_jBCancelActionPerformed
 
     private void jBAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddActionPerformed
@@ -359,18 +366,22 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
         declaration.setEtat(jTFEtat.getText());
         declaration.setLieuDeclaration(jTFLieux.getText());
         declaration.setType((short) 1);
-        
+
         String errors = animalBo.verifAnimal(animal) + "\n" + declarationBo.verifDeclaration(declaration);
         if (errors != null) {
             if (ifAdd) {
                 declarationBo.insert(declaration, animal);
+                this.setVisible(false);
+                new MainDeclarationForm().setVisible(true);
             } else {
                 declarationBo.update(declaration, animal);
+                this.setVisible(false);
+                new MainDeclarationForm().setVisible(true);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Veuillez revérifier les champs suivants: \n" + errors, "Erreur", JOptionPane.ERROR_MESSAGE);
-            
+
         }
     }//GEN-LAST:event_jBAddActionPerformed
 
@@ -379,7 +390,7 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
             if (jTFAge.getText() != null) {
                 Integer.parseInt(jTFAge.getText());
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Vous ne pouvez saisir que des chiffres", "Age", JOptionPane.ERROR_MESSAGE);
             jTFAge.setText("");
