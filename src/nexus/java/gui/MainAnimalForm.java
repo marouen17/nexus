@@ -10,8 +10,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
-import nexus.java.business.DeclarationBo;
-import nexus.java.entity.Declaration;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import nexus.java.business.AnimalBo;
@@ -21,19 +19,19 @@ import nexus.java.entity.Animal;
  *
  * @author MaruLanD
  */
-class AfficherDeclarationModel extends AbstractTableModel {
+class AfficherAnimalModel extends AbstractTableModel {
 
-    List<Declaration> declarations = new ArrayList<Declaration>();
-    String[] headers = {"Id", "Lieu", "Etat de l'animal", "Commentaire", "Espece",
+    List<Animal> animals = new ArrayList<Animal>();
+    String[] headers = {"Commentaire", "Espece",
         "Couleur", "Race", "Taille", "Age", "Sexe"};
 
-    public AfficherDeclarationModel() {
-        DeclarationBo declarationBo = DeclarationBo.getInstance();
-        declarations = declarationBo.readAll();
+    public AfficherAnimalModel() {
+        AnimalBo animalBo = AnimalBo.getInstance();
+        animals = animalBo.readAll();
     }
 
     public int getRowCount() {
-        return declarations.size();
+        return animals.size();
     }
 
     public int getColumnCount() {
@@ -43,25 +41,21 @@ class AfficherDeclarationModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return declarations.get(rowIndex).getIdDeclaration();
+                return animals.get(rowIndex).getIdAnimal();
             case 1:
-                return declarations.get(rowIndex).getLieuDeclaration();
+                return animals.get(rowIndex).getCommentaire();
             case 2:
-                return declarations.get(rowIndex).getEtat();
+                return animals.get(rowIndex).getEspece();
             case 3:
-                return declarations.get(rowIndex).getCommentaire();
+                return animals.get(rowIndex).getCouleur();
             case 4:
-                return declarations.get(rowIndex).getAnimal().getEspece();
+                return animals.get(rowIndex).getType();
             case 5:
-                return declarations.get(rowIndex).getAnimal().getCouleur();
+                return animals.get(rowIndex).getTaille();
             case 6:
-                return declarations.get(rowIndex).getAnimal().getType();
+                return animals.get(rowIndex).getAge();
             case 7:
-                return declarations.get(rowIndex).getAnimal().getTaille();
-            case 8:
-                return declarations.get(rowIndex).getAnimal().getAge();
-            case 9:
-                return declarations.get(rowIndex).getAnimal().getSexe();
+                return animals.get(rowIndex).getSexe();
             default:
                 return null;
 
@@ -74,12 +68,11 @@ class AfficherDeclarationModel extends AbstractTableModel {
     }
 }
 
-public class MainDeclarationForm extends javax.swing.JFrame {
+public class MainAnimalForm extends javax.swing.JFrame {
 
-    private DeclarationBo declarationBo = DeclarationBo.getInstance();
-    private AnimalBo animalBo = AnimalBo.getInstance();
+      private AnimalBo animalBo = AnimalBo.getInstance();
 
-    public MainDeclarationForm() {
+    public MainAnimalForm() {
         initComponents();
         jTAffichage.setAutoCreateRowSorter(true);
     }
@@ -182,14 +175,14 @@ public class MainDeclarationForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAddActionPerformed
-        new DeclarationAddUpdateForm().setVisible(true);
+        new AnimalAddUpdateForm().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jBAddActionPerformed
 
     private void jBUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUpdateActionPerformed
 
         if ((int) jTAffichage.getModel().getValueAt(jTAffichage.getSelectedRow(), 0) != -1) {
-            new DeclarationAddUpdateForm((int) jTAffichage.getModel().getValueAt(jTAffichage.getSelectedRow(), 0)).setVisible(true);
+            new AnimalAddUpdateForm((int) jTAffichage.getModel().getValueAt(jTAffichage.getSelectedRow(), 0)).setVisible(true);
             this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Erreur", "Vous devez d'abord selectionner la ligne à modifier", JOptionPane.ERROR_MESSAGE);
@@ -200,10 +193,9 @@ public class MainDeclarationForm extends javax.swing.JFrame {
         int id = (int) jTAffichage.getModel().getValueAt(jTAffichage.getSelectedRow(), 0);
         if (id != -1) {
             if (JOptionPane.showConfirmDialog(null, "êtes-vous sure de vouloir supprimer cette ligne?", null, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                Animal animal = declarationBo.readByID(id).getAnimal();
-                declarationBo.delete(declarationBo.readByID(id));
+                Animal animal = animalBo.readByID(id);
                 animalBo.delete(animal);
-                jTAffichage.setModel(new AfficherDeclarationModel());
+                jTAffichage.setModel(new AfficherAnimalModel());
             }
 
         } else {
@@ -228,20 +220,20 @@ public class MainDeclarationForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainDeclarationForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainAnimalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainDeclarationForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainAnimalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainDeclarationForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainAnimalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainDeclarationForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainAnimalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainDeclarationForm().setVisible(true);
+                new MainAnimalForm().setVisible(true);
             }
         });
     }

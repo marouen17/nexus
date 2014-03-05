@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import nexus.java.dao.IAnimalDao;
 import nexus.java.dao.IDeclarationDao;
 import nexus.java.dao.impl.AnimalDaoImpl;
-import nexus.java.dao.impl.DeclarationDaoImpl;
 import nexus.java.entity.Animal;
 import nexus.java.entity.Declaration;
 
@@ -20,8 +19,7 @@ import nexus.java.entity.Declaration;
  */
 public class DeclarationBo {
 
-    private IDeclarationDao declarationDao = new DeclarationDaoImpl();
-    private IAnimalDao animalDao = new AnimalDaoImpl();
+        private IAnimalDao animalDao = new AnimalDaoImpl();
 
     private static DeclarationBo instance = null;
 

@@ -17,15 +17,16 @@ public final class Cnx {
 
     private Connection dbCnx;
     private final String user = "root";
-    private final String password = "rootroot";
-    private final String url = "jdbc:mysql://localhost:3306/sosAnimaux";
+    private final String password = "root";
+    private final String url = "jdbc:mysql://localhost:3306/sosanimaux";
     private static Cnx instance = null;
 
     private Cnx() {
         try {
             dbCnx = DriverManager.getConnection(url, user, password);
         } catch (SQLException ex) {
-            System.out.println("Impossible de ce connecter ");
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
 
     }
