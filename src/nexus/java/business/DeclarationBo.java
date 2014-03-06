@@ -53,7 +53,7 @@ public class DeclarationBo {
     }
 
     public String verifDeclaration(Declaration d) {
-        String errors = null;
+        String errors = "";
         if (!veriflieux(d.getLieuDeclaration())) {
             errors += "-Lieu de déclaration\n";
         }

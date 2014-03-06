@@ -70,7 +70,7 @@ public class AnimalBo {
     }
 
     public String verifAnimal(Animal a) {
-        String errors = null;
+        String errors="";
         if (!verifAge(a.getAge())) {
             errors += "-Age\n";
         }
