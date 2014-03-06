@@ -13,15 +13,7 @@ public class Animal {
     private byte[] image;
     private String sexe;
     private String commentaire;
-    private int idMembre;
 
-    public int getIdMembre() {
-        return idMembre;
-    }
-
-    public void setIdMembre(int idMembre) {
-        this.idMembre = idMembre;
-    }
 
     public Animal() {
     }

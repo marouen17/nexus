@@ -22,8 +22,8 @@ import nexus.java.entity.Animal;
 class AfficherAnimalModel extends AbstractTableModel {
 
     List<Animal> animals = new ArrayList<Animal>();
-    String[] headers = {"Commentaire", "Espece",
-        "Couleur", "Race", "Taille", "Age", "Sexe"};
+    String[] headers = {"Id", "Espece",
+        "Couleur", "Race", "Taille", "Age", "Sexe","Commentaire"};
 
     public AfficherAnimalModel() {
         AnimalBo animalBo = AnimalBo.getInstance();
@@ -43,19 +43,20 @@ class AfficherAnimalModel extends AbstractTableModel {
             case 0:
                 return animals.get(rowIndex).getIdAnimal();
             case 1:
-                return animals.get(rowIndex).getCommentaire();
-            case 2:
                 return animals.get(rowIndex).getEspece();
-            case 3:
+            case 2:
                 return animals.get(rowIndex).getCouleur();
-            case 4:
+            case 3:
                 return animals.get(rowIndex).getType();
-            case 5:
+            case 4:
                 return animals.get(rowIndex).getTaille();
-            case 6:
+            case 5:
                 return animals.get(rowIndex).getAge();
-            case 7:
+            case 6:
                 return animals.get(rowIndex).getSexe();
+            case 7:
+                return animals.get(rowIndex).getCommentaire();
+                
             default:
                 return null;
 
@@ -92,10 +93,13 @@ public class MainAnimalForm extends javax.swing.JFrame {
         jBDelete = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane(jTAffichage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         jTAffichage = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("icon.jpg")).getImage());
         setResizable(false);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jBAdd.setText("Ajouter");
         jBAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +107,7 @@ public class MainAnimalForm extends javax.swing.JFrame {
                 jBAddActionPerformed(evt);
             }
         });
+        jPanel1.add(jBAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 23, 80, -1));
 
         jBUpdate.setText("Modifier");
         jBUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +115,7 @@ public class MainAnimalForm extends javax.swing.JFrame {
                 jBUpdateActionPerformed(evt);
             }
         });
+        jPanel1.add(jBUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 82, -1));
 
         jBDelete.setText("Supprimer");
         jBDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -117,43 +123,17 @@ public class MainAnimalForm extends javax.swing.JFrame {
                 jBDeleteActionPerformed(evt);
             }
         });
+        jPanel1.add(jBDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 98, -1, -1));
 
-        jTAffichage.setModel(new AfficherDeclarationModel());
+        jTAffichage.setModel(new AfficherAnimalModel());
         jTAffichage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         jScrollPane2.setViewportView(jTAffichage);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jBUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBDelete, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jBAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jBAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBDelete)
-                        .addGap(0, 286, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 62, 590, 340));
+
+        jLabel1.setFont(new java.awt.Font("Utsaah", 1, 24)); // NOI18N
+        jLabel1.setText("Gestion des animaux");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -242,6 +222,7 @@ public class MainAnimalForm extends javax.swing.JFrame {
     private javax.swing.JButton jBAdd;
     private javax.swing.JButton jBDelete;
     private javax.swing.JButton jBUpdate;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTAffichage;

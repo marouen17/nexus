@@ -1,5 +1,6 @@
 package nexus.java.dao.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -45,6 +46,30 @@ public class AnimalDaoImpl implements IAnimalDao {
             System.out.println("erreur lors de l'insertion " + ex.getMessage());
         }
         return true;
+        
+//  {
+//    File monImage = new File(location);
+//    FileInputStream istreamImage = new FileInputStream(monImage);
+//
+//    try
+//    {
+//      PreparedStatement ps = conn.prepareStatement(
+//          "insert into image (name, img) values (?,?)");
+//      try
+//      {
+//        ps.setString(1, name);
+//        ps.setBinaryStream(2, istreamImage, (int) monImage.length());
+//        ps.executeUpdate();
+//      }
+//      finally
+//      {
+//        ps.close();
+//      }
+//    }
+//    finally
+//    {
+//      istreamImage.close();
+//    }
     }
 
     @Override

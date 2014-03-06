@@ -5,37 +5,36 @@
  */
 package nexus.java.gui;
 
+import java.io.File;
+import java.io.FileInputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import nexus.java.business.AnimalBo;
-
 import nexus.java.entity.Animal;
-import nexus.java.entity.Declaration;
+
 
 /**
  *
  * @author MaruLanD
  */
 public class AnimalAddUpdateForm extends javax.swing.JFrame {
-
-       private AnimalBo animalBo = AnimalBo.getInstance();
+    
+    private AnimalBo animalBo = AnimalBo.getInstance();
     private boolean ifAdd = true;
-
+    
     Animal animal = new Animal();
-    Declaration declaration = new Declaration();
-
+    
     public AnimalAddUpdateForm() {
         initComponents();
-        jTFIdAnimal.setText((animalBo.getMaxID()+1)+"");
+        jTFIdAnimal.setText((animalBo.getMaxID() + 1) + "");
         
-
     }
-
+    
     public AnimalAddUpdateForm(int id) {
-
+        
         animal = animalBo.readByID(id);
         
-
         initComponents();
         jTFIdAnimal.setText(animal.getIdAnimal() + "");
         jTFAge.setText(animal.getAge() + "");
@@ -49,11 +48,10 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
         }
         jTFTaille.setText(animal.getTaille());
         jCBType.setSelectedItem(animal.getType());
-             
-
+        
         ifAdd = false;
         jBAdd.setText("Modifier");
-
+        titre.setText("Modifier un animal");
     }
 
     /**
@@ -67,7 +65,7 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
         BGSexe = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
+        JImage = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jTFIdAnimal = new javax.swing.JTextField();
         jTFEspece = new javax.swing.JTextField();
@@ -91,6 +89,8 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
         jBCancel = new javax.swing.JButton();
         jBAdd = new javax.swing.JButton();
         titre = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jInternalFrame1.setVisible(true);
 
@@ -112,68 +112,73 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("icon.jpg")).getImage());
         setResizable(false);
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        JImage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setText("Id de l'animal: ");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+        JImage.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
         jTFIdAnimal.setBackground(new java.awt.Color(250, 250, 250));
         jTFIdAnimal.setEnabled(false);
-        jPanel1.add(jTFIdAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 164, -1));
-        jPanel1.add(jTFEspece, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 164, -1));
+        JImage.add(jTFIdAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 164, -1));
+        JImage.add(jTFEspece, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 164, -1));
 
         jLabel6.setText("Espece: ");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+        JImage.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
         jLabel7.setText("Couleur: ");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 57, 10));
-        jPanel1.add(jTFCouleur, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 164, -1));
+        JImage.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 57, 10));
+        JImage.add(jTFCouleur, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 164, -1));
 
         jLabel8.setText("Type: ");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        JImage.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
         jLabel9.setText("Taille: ");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
-        jPanel1.add(jTFTaille, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 164, -1));
+        JImage.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
+        JImage.add(jTFTaille, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 164, -1));
 
         jLabel10.setText("Age: ");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+        JImage.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 114, -1, 20));
 
         jLabel11.setText("Image: ");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 40, 20));
+        JImage.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 40, 20));
 
         jLabel12.setText("Sexe: ");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 30, 10));
+        JImage.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 30, 10));
 
         jRBFem.setText("Female");
-        jPanel1.add(jRBFem, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, 60, 30));
+        JImage.add(jRBFem, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, 60, 30));
 
         jRBMal.setText("Male");
         jRBMal.setSelected(true);
-        jPanel1.add(jRBMal, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 140, 50, 30));
+        JImage.add(jRBMal, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 140, 50, 30));
 
         jTFAge.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTFAgeFocusLost(evt);
             }
         });
-        jPanel1.add(jTFAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 164, -1));
+        JImage.add(jTFAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(474, 110, 150, -1));
 
         jBImg.setText("Parcourir");
         jBImg.setPreferredSize(new java.awt.Dimension(75, 20));
-        jPanel1.add(jBImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 160, 20));
+        jBImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBImgActionPerformed(evt);
+            }
+        });
+        JImage.add(jBImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 160, 20));
 
-        jCBType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jCBType, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 164, -1));
+        jCBType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chien", "Chat", "Hamster", "Oiseau", "Singe", "autre" }));
+        JImage.add(jCBType, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 164, -1));
 
         jLabel13.setText("Commentaire:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, 70, 10));
+        JImage.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, 70, 10));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 150, 120));
+        JImage.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 150, 120));
 
         jBCancel.setText("Annuler");
         jBCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -181,7 +186,7 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
                 jBCancelActionPerformed(evt);
             }
         });
-        jPanel1.add(jBCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 360, 70, 20));
+        JImage.add(jBCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 80, 20));
 
         jBAdd.setText("Ajouter");
         jBAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -189,22 +194,25 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
                 jBAddActionPerformed(evt);
             }
         });
-        jPanel1.add(jBAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 360, 70, 20));
+        JImage.add(jBAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, 80, 20));
 
         titre.setFont(new java.awt.Font("Vijaya", 1, 24)); // NOI18N
-        titre.setForeground(new java.awt.Color(0, 102, 255));
         titre.setText("Ajouter un animal");
-        jPanel1.add(titre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
+        JImage.add(titre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
+        JImage.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, -1, -1));
+        JImage.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+            .addComponent(JImage, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(JImage, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -227,12 +235,11 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
         }
         animal.setTaille(jTFTaille.getText());
         animal.setType(jCBType.getSelectedItem().toString());
-            
-
+        
         String errors = animalBo.verifAnimal(animal) + "\n" + animalBo.verifAnimal(animal);
         if (errors != null) {
             if (ifAdd) {
-                animalBo.insert( animal);
+                animalBo.insert(animal);
                 this.setVisible(false);
                 new MainAnimalForm().setVisible(true);
             } else {
@@ -240,10 +247,10 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
                 this.setVisible(false);
                 new MainAnimalForm().setVisible(true);
             }
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "Veuillez revérifier les champs suivants: \n" + errors, "Erreur", JOptionPane.ERROR_MESSAGE);
-
+            
         }
     }//GEN-LAST:event_jBAddActionPerformed
 
@@ -252,12 +259,39 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
             if (jTFAge.getText() != null) {
                 Integer.parseInt(jTFAge.getText());
             }
-
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Vous ne pouvez saisir que des chiffres", "Age", JOptionPane.ERROR_MESSAGE);
             jTFAge.setText("");
         }
     }//GEN-LAST:event_jTFAgeFocusLost
+
+    private void jBImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBImgActionPerformed
+
+try{
+            JFileChooser picchooser = new JFileChooser();
+            int returnval = picchooser.showOpenDialog(null);
+            File file = null;
+            if(returnval == JFileChooser.APPROVE_OPTION){
+                file = picchooser.getSelectedFile();
+                String filename = file.getAbsolutePath();
+                File pics = new File(filename);
+                ImageIcon ima = new ImageIcon(filename);
+                FileInputStream fistream1 = new FileInputStream (pics);
+                jLabel2.setIcon(ima);
+                jLabel2.setSize(100,100);
+               
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+// pas de fichier choisi
+      
+
+
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jBImgActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,21 +330,23 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup BGSexe;
+    private javax.swing.JPanel JImage;
     private javax.swing.JButton jBAdd;
     private javax.swing.JButton jBCancel;
     private javax.swing.JButton jBImg;
     private javax.swing.JComboBox jCBType;
     private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRBFem;
     private javax.swing.JRadioButton jRBMal;
     private javax.swing.JScrollPane jScrollPane2;
