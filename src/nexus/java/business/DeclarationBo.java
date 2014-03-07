@@ -9,10 +9,13 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import nexus.java.dao.IAnimalDao;
 import nexus.java.dao.IDeclarationDao;
+import nexus.java.dao.IMembreDao;
+import nexus.java.dao.Impl.MembreDaoImpl;
 import nexus.java.dao.impl.AnimalDaoImpl;
 import nexus.java.dao.impl.DeclarationDaoImpl;
 import nexus.java.entity.Animal;
 import nexus.java.entity.Declaration;
+import nexus.java.entity.Membre;
 
 /**
  *
@@ -22,6 +25,7 @@ public class DeclarationBo {
 
     private IDeclarationDao declarationDao = new DeclarationDaoImpl();
     private IAnimalDao animalDao = new AnimalDaoImpl();
+    private IMembreDao membreDao = new MembreDaoImpl();
 
     private static DeclarationBo instance = null;
 
@@ -64,6 +68,24 @@ public class DeclarationBo {
         return errors;
     }
 
+    public void insert(Declaration d, Animal a, Membre m) {
+
+        if (membreDao.insert(m)) {
+            if (d.getType().equals("1")) {
+                a.setMembre(new Membre(membreDao.getMaxID()));
+            }
+            animalDao.insert(a);
+            d.setMembre(new Membre(membreDao.getMaxID()));
+            d.setAnimal(new Animal(animalDao.getMaxID()));
+
+            d.setIsFound(false);
+            declarationDao.insert(d);
+        } else {
+            JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de l'ajout", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
     public void insert(Declaration d, Animal a) {
 
         if (animalDao.insert(a)) {
@@ -73,6 +95,14 @@ public class DeclarationBo {
             JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de l'ajout", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    public void update(Declaration d, Animal a, Membre m) {
+        if (animalDao.update(a) && declarationDao.update(d) && membreDao.update(m)) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de la modification", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void update(Declaration d, Animal a) {

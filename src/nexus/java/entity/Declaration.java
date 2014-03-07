@@ -5,6 +5,8 @@
  */
 package nexus.java.entity;
 
+import java.util.Date;
+
 /**
  *
  * @author MaruLanD
@@ -12,12 +14,14 @@ package nexus.java.entity;
 public class Declaration {
 
     private int idDeclaration;
-    private Integer membre;
+    private Membre membre;
     private Animal animal;
     private String lieuDeclaration;
     private String etat;
     private String commentaire;
     private Short type;
+    private Date date;
+    private boolean isFound;
 
     public Declaration() {
     }
@@ -26,8 +30,8 @@ public class Declaration {
         this.idDeclaration = idDeclaration;
     }
 
-    public Declaration(int idDeclaration, Integer idMembre, Animal animal, String lieuDeclaration, String etat,
-            String commentaire, Short type) {
+    public Declaration(int idDeclaration, Membre idMembre, Animal animal, String lieuDeclaration, String etat,
+            String commentaire, Short type, Date date, boolean isFound) {
         this.idDeclaration = idDeclaration;
         this.membre = idMembre;
         this.animal = animal;
@@ -35,6 +39,24 @@ public class Declaration {
         this.etat = etat;
         this.commentaire = commentaire;
         this.type = type;
+        this.date = date;
+        this.isFound = isFound;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public boolean getIsFound() {
+        return isFound;
+    }
+
+    public void setIsFound(boolean isFound) {
+        this.isFound = isFound;
     }
 
     public int getIdDeclaration() {
@@ -45,11 +67,11 @@ public class Declaration {
         this.idDeclaration = idDeclaration;
     }
 
-    public Integer getMembre() {
+    public Membre getMembre() {
         return this.membre;
     }
 
-    public void setMembre(Integer idMembre) {
+    public void setMembre(Membre idMembre) {
         this.membre = idMembre;
     }
 

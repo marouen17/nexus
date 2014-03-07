@@ -13,14 +13,14 @@ public class Animal {
     private byte[] image;
     private String sexe;
     private String commentaire;
-    private int idMembre;
+    private Membre membre;
 
-    public int getIdMembre() {
-        return idMembre;
+    public Membre getMembre() {
+        return membre;
     }
 
-    public void setIdMembre(int idMembre) {
-        this.idMembre = idMembre;
+    public void setMembre(Membre idMembre) {
+        this.membre = idMembre;
     }
 
     public Animal() {
@@ -31,7 +31,7 @@ public class Animal {
     }
 
     public Animal(int idAnimal, String espece, String couleur, String type, String taille, Integer age, byte[] image,
-            String sexe, String commentaire) {
+            String sexe, String commentaire,Membre membre) {
         this.idAnimal = idAnimal;
         this.espece = espece;
         this.couleur = couleur;
@@ -41,6 +41,7 @@ public class Animal {
         this.image = image;
         this.sexe = sexe;
         this.commentaire = commentaire;
+        this.membre=membre;
     }
 
     public int getIdAnimal() {
