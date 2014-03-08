@@ -90,6 +90,7 @@ public class DeclarationBo {
 
         if (animalDao.insert(a)) {
             d.setAnimal(new Animal(animalDao.getMaxID()));
+            d.setIsFound(false);
             declarationDao.insert(d);
         } else {
             JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de l'ajout", "Erreur", JOptionPane.ERROR_MESSAGE);
