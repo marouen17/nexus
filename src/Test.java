@@ -1,4 +1,8 @@
 
+import nexus.java.dao.IDeclarationDao;
+import nexus.java.dao.IMembreDao;
+import nexus.java.dao.Impl.MembreDaoImpl;
+import nexus.java.dao.impl.DeclarationDaoImpl;
 import nexus.java.utils.ReportGen;
 
 /*
@@ -13,6 +17,10 @@ import nexus.java.utils.ReportGen;
  */
 public class Test {
     public static void main(String[] args) {
-        ReportGen gen=new ReportGen("aa","Declaration.jrxml");
+        IMembreDao dao=new MembreDaoImpl();
+        IDeclarationDao dao1=new DeclarationDaoImpl();
+        dao1.readAll();
+                
+        
     }
 }

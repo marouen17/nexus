@@ -120,7 +120,7 @@ public class DeclarationDaoImpl implements IDeclarationDao {
     @Override
     public List<Declaration> readAll() {
         IAnimalDao animalDao = new AnimalDaoImpl();
-        IMembreDao membreDao = new MembreDaoImpl();
+        IMembreDao membreDao = new nexus.java.dao.Impl.MembreDaoImpl();
         List<Declaration> declarations = new ArrayList<Declaration>();
         try {
             Statement st = cnx.createStatement();

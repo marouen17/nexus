@@ -17,7 +17,7 @@ import javax.swing.JTable;
 import nexus.java.business.AnimalBo;
 import nexus.java.business.MembreBo;
 import nexus.java.entity.Animal;
-import nexus.java.entity.Membre;
+
 
 /**
  *

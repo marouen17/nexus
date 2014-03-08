@@ -26,7 +26,7 @@ public class ReportGen {
 
     public ReportGen(String titre,String ressource) {
 
-        try {
+       /* try {
             // - Connexion Ã  la base
             Connection connection = Cnx.getInstance().getConnection();
             // - Chargement et compilation du rapport
@@ -44,7 +44,7 @@ public class ReportGen {
 
         } catch (JRException | IOException e) {
             System.out.println("erreur" + e.getMessage());
-        }
+        }*/
     }
 
 }

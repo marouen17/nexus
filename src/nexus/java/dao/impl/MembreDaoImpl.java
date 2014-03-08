@@ -49,11 +49,12 @@ public class MembreDaoImpl implements IMembreDao {
 
     @Override
     public boolean update(Membre obj) {
-        String requete = "update membre set login=?,mdpasse=?,nom=?,prenom=?,adresse=?,sexe=?,code_Postal=?,ville=?,pays=? where id_Membre=?";
+        String requete = "update membre set login=?,mdpasse=?,nom=?,prenom=?,adresse=?,sexe=?,code_postal=?,ville=?,pays=? where id_Membre=?";
 
         try {
             PreparedStatement ps = cnx.prepareStatement(requete);
 
+            
             ps.setString(1, obj.getLogin());
             ps.setString(2, obj.getMdpasse());
             ps.setString(3, obj.getNom());
@@ -63,6 +64,7 @@ public class MembreDaoImpl implements IMembreDao {
             ps.setInt(7, obj.getCodePostal());
             ps.setString(8, obj.getVille());
             ps.setString(9, obj.getPays());
+            
             ps.setInt(10, obj.getIdMembre());
 
             int var = ps.executeUpdate();
@@ -125,7 +127,6 @@ public class MembreDaoImpl implements IMembreDao {
                 m.setPays(resultat.getString(10));
                 
                 
-                
                 listemem.add(m);
             }
             return listemem;
@@ -148,15 +149,15 @@ public class MembreDaoImpl implements IMembreDao {
             resultat.next();
 
             m.setIdMembre(resultat.getInt(1));
-            m.setNom(resultat.getString(2));
-            m.setPrenom(resultat.getString(3));
-            m.setSexe(resultat.getString(4));
-            m.setAdresse(resultat.getString(5));
-            m.setVille(resultat.getString(6));
-            m.setPays(resultat.getString(7));
+            m.setLogin(resultat.getString(2));
+            m.setMdpasse(resultat.getString(3));
+            m.setNom(resultat.getString(4));
+            m.setPrenom(resultat.getString(5));
+            m.setAdresse(resultat.getString(6));
+            m.setSexe(resultat.getString(7));
             m.setCodePostal(resultat.getInt(8));
-            m.setLogin(resultat.getString(9));
-            m.setMdpasse(resultat.getString(10));
+            m.setVille(resultat.getString(9));
+            m.setPays(resultat.getString(10));
 
             return m;
         } catch (SQLException ex) {
