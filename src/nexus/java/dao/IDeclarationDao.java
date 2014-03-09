@@ -14,6 +14,4 @@ import nexus.java.entity.Declaration;
  */
 public interface IDeclarationDao extends IUtilDao<Declaration, Integer>{
 
-    public int getMaxID();
-    
 }

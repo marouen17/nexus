@@ -13,6 +13,4 @@ import nexus.java.entity.Membre;
  */
 public interface IMembreDao extends IUtilDao<Membre, Integer> {
 
-    public int getMaxID();
-
 }

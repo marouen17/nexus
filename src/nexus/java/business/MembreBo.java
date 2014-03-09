@@ -43,16 +43,19 @@ public class MembreBo {
 
     }
 
-    public boolean verifeCodePostal(Integer codePostal) {
-        if (codePostal.equals(null)) {
+    public boolean verifeCodePostal(String codePostal) {
+        if (codePostal.equals(null) || codePostal.equals("")) {
             return false;
         } else {
-            if (codePostal < 0) {
+            try {
+                Integer.parseInt(codePostal);
+                return true;
+            } catch (NumberFormatException e) {
                 return false;
-            }
-            return true;
-        }
 
+            }
+
+        }
     }
 
     public boolean verifeAdresse(String adresse) {
@@ -95,7 +98,14 @@ public class MembreBo {
         if (login.equals(null) || login.equals("")) {
             return false;
         } else {
-            return true;
+            java.util.regex.Pattern p = java.util.regex.Pattern.compile(".+@.+\\.[a-z]+");
+            try {
+                java.util.regex.Matcher m = p.matcher(login);
+                return m.matches();
+            } catch (NullPointerException ee) {
+
+                return false;
+            }
         }
 
     }
@@ -109,7 +119,7 @@ public class MembreBo {
 
     }
 
-    public String verifAnimal(Membre m) {
+    public String verifMembre(Membre m) {
         String errors = "";
         if (!verifeNom(m.getNom())) {
             errors += "-Nom\n";
@@ -120,7 +130,7 @@ public class MembreBo {
         if (!verifeAdresse(m.getAdresse())) {
             errors += "-Adresse\n";
         }
-        if (!verifeCodePostal(m.getCodePostal())) {
+        if (!verifeCodePostal(m.getCodePostal() + "")) {
             errors += "-Code postal\n";
         }
         if (!verifeSexe(m.getSexe())) {
@@ -164,10 +174,9 @@ public class MembreBo {
     public Membre readByID(Integer id) {
         return membreDao.readByID(id);
     }
-    public  int getMaxID() {
+
+    public int getMaxID() {
         return membreDao.getMaxID();
     }
-
-    
 
 }

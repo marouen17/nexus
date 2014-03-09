@@ -1,34 +1,32 @@
-
 package nexus.java.gui;
 
 import javax.swing.JOptionPane;
 import nexus.java.business.MembreBo;
 import nexus.java.entity.Membre;
+import nexus.java.utils.EmailSender;
 
 public class AjoutModifMembre extends javax.swing.JFrame {
-    
-    private MembreBo membreBo=MembreBo.getInstance();
-   private boolean ifAdd = true;
+
+    private MembreBo membreBo = MembreBo.getInstance();
+    private boolean ifAdd = true;
 
     Membre membre = new Membre();
-    
 
     public AjoutModifMembre() {
         initComponents();
         idField.setText((membreBo.getMaxID() + 1) + "");
-        
 
     }
 
-    public AjoutModifMembre (int id) {
+    public AjoutModifMembre(int id) {
 
         membre = membreBo.readByID(id);
-       
+
         initComponents();
-        idField.setText(membre.getIdMembre()+ "");
+        idField.setText(membre.getIdMembre() + "");
         NomField.setText(membre.getNom());
         prenomField.setText(membre.getPrenom());
-        codeField.setText(membre.getCodePostal()+"");
+        codeField.setText(membre.getCodePostal() + "");
         adresseField.setText(membre.getAdresse());
         if (membre.getSexe().equals("Homme")) {
             hommeRadioButton.setSelected(true);
@@ -39,7 +37,7 @@ public class AjoutModifMembre extends javax.swing.JFrame {
         paysField.setText(membre.getPays());
         loginField.setText(membre.getLogin());
         mdpField.setText(membre.getMdpasse());
-       
+
         ifAdd = false;
         jButton1.setText("Modifier");
 
@@ -69,11 +67,11 @@ public class AjoutModifMembre extends javax.swing.JFrame {
         paysField = new javax.swing.JTextField();
         codeField = new javax.swing.JTextField();
         loginField = new javax.swing.JTextField();
-        mdpField = new javax.swing.JTextField();
         precedentButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         idField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        mdpField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -134,8 +132,18 @@ public class AjoutModifMembre extends javax.swing.JFrame {
             }
         });
         jPanel1.add(codeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 87, 126, -1));
+
+        loginField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginFieldActionPerformed(evt);
+            }
+        });
+        loginField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                loginFieldFocusLost(evt);
+            }
+        });
         jPanel1.add(loginField, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 125, 126, -1));
-        jPanel1.add(mdpField, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 163, 126, -1));
 
         precedentButton.setText("Annuler");
         precedentButton.addActionListener(new java.awt.event.ActionListener() {
@@ -159,6 +167,7 @@ public class AjoutModifMembre extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, -1, -1));
+        jPanel1.add(mdpField, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 130, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 11, 580, 270));
 
@@ -172,17 +181,17 @@ public class AjoutModifMembre extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String sexe ="";
-        if (femmeRadioButton.isSelected()){
+        String sexe = "";
+        if (femmeRadioButton.isSelected()) {
             sexe = femmeRadioButton.getText();
         }
-        if (hommeRadioButton.isSelected()){
+        if (hommeRadioButton.isSelected()) {
             sexe = hommeRadioButton.getText();
         }
         String nom = NomField.getText();
         String prenom = prenomField.getText();
         String adresse = adresseField.getText();
-        Integer codePostal = Integer.parseInt(codeField.getText()) ;
+        Integer codePostal = Integer.parseInt(codeField.getText());
         String ville = villeField.getText();
         String pays = paysField.getText();
         String login = loginField.getText();
@@ -197,14 +206,15 @@ public class AjoutModifMembre extends javax.swing.JFrame {
         membre.setLogin(login);
         membre.setMdpasse(mdp);
         membre.setSexe(sexe);
-        
-        String errors = membreBo.verifAnimal(membre);
+
+        String errors = membreBo.verifMembre(membre);
         if (errors.equals("")) {
             if (ifAdd) {
                 membreBo.insert(membre);
+                EmailSender.sendMail(membre.getLogin(), "sosanimaux123", "Bienvenu vous etes maintenant membre à SOS Animaux", "SosAnimauxEsprit@gmail.com");
                 this.setVisible(false);
                 new MainMembreForm().setVisible(true);
-              } else {
+            } else {
                 membreBo.update(membre);
                 this.setVisible(false);
                 new MainMembreForm().setVisible(true);
@@ -214,7 +224,7 @@ public class AjoutModifMembre extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Veuillez revérifier les champs suivants: \n" + errors, "Erreur", JOptionPane.ERROR_MESSAGE);
 
         }
-       
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void NomFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NomFieldActionPerformed
@@ -222,9 +232,23 @@ public class AjoutModifMembre extends javax.swing.JFrame {
     }//GEN-LAST:event_NomFieldActionPerformed
 
     private void codeFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codeFieldFocusLost
-        // TODO add your handling code here:
+        if (!membreBo.verifeCodePostal(codeField.getText())) {
+            JOptionPane.showMessageDialog(null, "Vous ne pouvez saisir que des chiffres", "Code postal", JOptionPane.ERROR_MESSAGE);
+            codeField.setText("");
+        }
     }//GEN-LAST:event_codeFieldFocusLost
-    
+
+    private void loginFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginFieldActionPerformed
+        
+    }//GEN-LAST:event_loginFieldActionPerformed
+
+    private void loginFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginFieldFocusLost
+        if (!membreBo.verifeLogin(loginField.getText())) {
+            JOptionPane.showMessageDialog(null, "Le login doit être une adresse e-mail", "Login", JOptionPane.ERROR_MESSAGE);
+            loginField.setText("");
+        }
+    }//GEN-LAST:event_loginFieldFocusLost
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -278,7 +302,7 @@ public class AjoutModifMembre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField loginField;
-    private javax.swing.JTextField mdpField;
+    private javax.swing.JPasswordField mdpField;
     private javax.swing.JTextField paysField;
     private javax.swing.JButton precedentButton;
     private javax.swing.JTextField prenomField;

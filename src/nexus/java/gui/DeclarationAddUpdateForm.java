@@ -191,6 +191,11 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
         jRBMal.setSelected(true);
         jPanel1.add(jRBMal, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 224, -1, -1));
 
+        jTFAge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFAgeActionPerformed(evt);
+            }
+        });
         jTFAge.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTFAgeFocusLost(evt);
@@ -315,6 +320,10 @@ public class DeclarationAddUpdateForm extends javax.swing.JFrame {
             jTFAge.setText("");
         }
     }//GEN-LAST:event_jTFAgeFocusLost
+
+    private void jTFAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFAgeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFAgeActionPerformed
 
     /**
      * @param args the command line arguments

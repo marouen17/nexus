@@ -3,91 +3,75 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package nexus.java.gui;
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import nexus.java.business.MembreBo;
-import nexus.java.entity.Membre;
+import nexus.java.business.AdministrateurBo;
+import nexus.java.entity.Administrateur;
 
 /**
  *
  * @author lenovo
  */
-class AfficherMembre extends AbstractTableModel {
-    
-    List<Membre> listem = new ArrayList<Membre>();
-    String[] headers = {"Id", "Nom", "Prenom","Sexe","Adresse","Ville","Pays","Code postale","Login"};
+class AffichModel extends AbstractTableModel {
 
-    public AfficherMembre() {
-        MembreBo membreBo = MembreBo.getInstance();
-        listem = membreBo.readAll();
+    List<Administrateur> administrateurs = new ArrayList<Administrateur>();
+    String[] headers = {"Id","nom et prénom","Fonction" ,"Login","Mot de passe"};
 
+    public AffichModel() {
+        AdministrateurBo administrateurBo = AdministrateurBo.getInstance();
+        administrateurs = administrateurBo.readAll();
     }
 
+    public int getRowCount() {
+        return administrateurs.size();
+    }
 
-    
+    public int getColumnCount() {
+        return headers.length;
+    }
 
-    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-       switch (columnIndex) {
+        switch (columnIndex) {
             case 0:
-                return listem.get(rowIndex).getIdMembre();
+                return administrateurs.get(rowIndex).getIdAdmin();
             case 1:
-                return listem.get(rowIndex).getNom();
+                return administrateurs.get(rowIndex).getNomPrenom();
             case 2:
-                return listem.get(rowIndex).getPrenom();
+                return administrateurs.get(rowIndex).getFonction();
             case 3:
-                return listem.get(rowIndex).getSexe();
+                return administrateurs.get(rowIndex).getLoginAdmin();
             case 4:
-                return listem.get(rowIndex).getAdresse();
-            case 5:
-                return listem.get(rowIndex).getVille();
-            case 6:
-                return listem.get(rowIndex).getPays();
-            case 7:
-                return listem.get(rowIndex).getCodePostal();
-            case 8:
-                return listem.get(rowIndex).getLogin();
-            
+                return administrateurs.get(rowIndex).getMtPasse();
+
             default:
                 return null;
 
         }
     }
-     @Override
+
+    @Override
     public String getColumnName(int column) {
         return headers[column];
     }
-
-    @Override
-    public int getRowCount() {
-       return listem.size();
-    }
-
-    @Override
-    public int getColumnCount() {
-        return headers.length;    }
-    
 }
-
 
 /**
  *
  * @author lenovo
  */
-public class MainMembreForm extends javax.swing.JFrame {
+public class MainAdministrateurForm extends javax.swing.JFrame {
 
     /**
      * Creates new form MembreGui
      */
-    MembreBo membreBo=MembreBo.getInstance();
-    public MainMembreForm() {
+    AdministrateurBo adminBo = AdministrateurBo.getInstance();
+
+    public MainAdministrateurForm() {
         initComponents();
     }
 
@@ -105,8 +89,8 @@ public class MainMembreForm extends javax.swing.JFrame {
         modiferButton = new javax.swing.JButton();
         supprimerButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane(jTable1,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane(jTable2,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -132,46 +116,43 @@ public class MainMembreForm extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setText("Menu de gestion des membres");
+        jLabel1.setText("Menu de gestion des administateur");
 
-        jTable1.setModel(new AfficherMembre());
-        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        jScrollPane1.setViewportView(jTable1);
+        jTable2.setAutoCreateRowSorter(true);
+        jTable2.setModel(new AffichModel());
+        jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(modiferButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(AjouterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(supprimerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(252, 252, 252)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AjouterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(modiferButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(supprimerButton)))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(AjouterButton)
-                .addGap(36, 36, 36)
-                .addComponent(modiferButton)
-                .addGap(39, 39, 39)
-                .addComponent(supprimerButton)
-                .addContainerGap(139, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(AjouterButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(modiferButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(supprimerButton))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,28 +160,26 @@ public class MainMembreForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(11, 11, 11)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void supprimerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerButtonActionPerformed
-        int id = (int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
+        int id = (int) jTable2.getModel().getValueAt(jTable2.getSelectedRow(), 0);
         if (id != -1) {
             if (JOptionPane.showConfirmDialog(null, "êtes-vous sure de vouloir supprimer cette ligne?", null, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                Membre membre = membreBo.readByID(id);
-                membreBo.delete(membre);
-                jTable1.setModel(new AfficherMembre());
+                Administrateur admin = adminBo.readByID(id);
+                adminBo.delete(admin);
+                jTable2.setModel(new AffichModel());
             }
 
         } else {
@@ -209,9 +188,9 @@ public class MainMembreForm extends javax.swing.JFrame {
     }//GEN-LAST:event_supprimerButtonActionPerformed
 
     private void modiferButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modiferButtonActionPerformed
-      
-        if ((int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0) != -1) {
-           new AjoutModifMembre((int) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0)).setVisible(true);
+
+        if ((int) jTable2.getModel().getValueAt(jTable2.getSelectedRow(), 0) != -1) {
+            new AjoutModifAdministrateur((int) jTable2.getModel().getValueAt(jTable2.getSelectedRow(), 0)).setVisible(true);
             this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Erreur", "Vous devez d'abord selectionner la ligne à modifier", JOptionPane.ERROR_MESSAGE);
@@ -220,7 +199,7 @@ public class MainMembreForm extends javax.swing.JFrame {
 
     private void AjouterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AjouterButtonActionPerformed
 
-        new AjoutModifMembre().setVisible(true);
+        new AjoutModifAdministrateur().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_AjouterButtonActionPerformed
 
@@ -241,20 +220,20 @@ public class MainMembreForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMembreForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainAdministrateurForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMembreForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainAdministrateurForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMembreForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainAdministrateurForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainMembreForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainAdministrateurForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainMembreForm().setVisible(true);
+                new MainAdministrateurForm().setVisible(true);
             }
         });
     }
@@ -263,8 +242,8 @@ public class MainMembreForm extends javax.swing.JFrame {
     private javax.swing.JButton AjouterButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable2;
     private javax.swing.JButton modiferButton;
     private javax.swing.JButton supprimerButton;
     // End of variables declaration//GEN-END:variables

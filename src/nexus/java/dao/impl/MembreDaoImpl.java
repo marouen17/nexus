@@ -22,7 +22,6 @@ public class MembreDaoImpl implements IMembreDao {
         try {
             PreparedStatement ps = cnx.prepareStatement(requete);
 
-            
             ps.setString(1, obj.getLogin());
             ps.setString(2, obj.getMdpasse());
             ps.setString(3, obj.getNom());
@@ -54,7 +53,6 @@ public class MembreDaoImpl implements IMembreDao {
         try {
             PreparedStatement ps = cnx.prepareStatement(requete);
 
-            
             ps.setString(1, obj.getLogin());
             ps.setString(2, obj.getMdpasse());
             ps.setString(3, obj.getNom());
@@ -64,7 +62,7 @@ public class MembreDaoImpl implements IMembreDao {
             ps.setInt(7, obj.getCodePostal());
             ps.setString(8, obj.getVille());
             ps.setString(9, obj.getPays());
-            
+
             ps.setInt(10, obj.getIdMembre());
 
             int var = ps.executeUpdate();
@@ -125,8 +123,7 @@ public class MembreDaoImpl implements IMembreDao {
                 m.setCodePostal(resultat.getInt(8));
                 m.setVille(resultat.getString(9));
                 m.setPays(resultat.getString(10));
-                
-                
+
                 listemem.add(m);
             }
             return listemem;
@@ -173,14 +170,15 @@ public class MembreDaoImpl implements IMembreDao {
         try {
             st = cnx.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            rs.next();
-            return rs.getInt(1);
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return 0;
     }
-    
 
 }

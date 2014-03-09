@@ -25,4 +25,6 @@ public interface IUtilDao<E, I> {
 
     public E readByID(I id);
 
+    public int getMaxID();
+
 }
