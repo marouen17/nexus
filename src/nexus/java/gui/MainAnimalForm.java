@@ -12,6 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import nexus.java.business.AnimalBo;
 import nexus.java.entity.Animal;
 
@@ -67,6 +71,7 @@ class AfficherAnimalModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return headers[column];
     }
+
 }
 
 public class MainAnimalForm extends javax.swing.JFrame {
@@ -94,12 +99,11 @@ public class MainAnimalForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane(jTAffichage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         jTAffichage = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("icon.jpg")).getImage());
         setResizable(false);
-
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jBAdd.setText("Ajouter");
         jBAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +111,6 @@ public class MainAnimalForm extends javax.swing.JFrame {
                 jBAddActionPerformed(evt);
             }
         });
-        jPanel1.add(jBAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 23, 80, -1));
 
         jBUpdate.setText("Modifier");
         jBUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +118,6 @@ public class MainAnimalForm extends javax.swing.JFrame {
                 jBUpdateActionPerformed(evt);
             }
         });
-        jPanel1.add(jBUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 82, -1));
 
         jBDelete.setText("Supprimer");
         jBDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -123,17 +125,61 @@ public class MainAnimalForm extends javax.swing.JFrame {
                 jBDeleteActionPerformed(evt);
             }
         });
-        jPanel1.add(jBDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 98, -1, -1));
 
         jTAffichage.setModel(new AfficherAnimalModel());
         jTAffichage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jTAffichage.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTAffichagePropertyChange(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTAffichage);
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 62, 590, 340));
+        //jTAffichage.getModel().addTableModelListener(this);
 
         jLabel1.setFont(new java.awt.Font("Utsaah", 1, 24)); // NOI18N
         jLabel1.setText("Gestion des animaux");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(220, 220, 220)
+                .addComponent(jLabel1)
+                .addGap(13, 13, 13))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBDelete)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jBUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jBAdd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 96, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jBAdd)
+                        .addGap(12, 12, 12)
+                        .addComponent(jBUpdate)
+                        .addGap(15, 15, 15)
+                        .addComponent(jBDelete)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,6 +208,7 @@ public class MainAnimalForm extends javax.swing.JFrame {
     private void jBUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUpdateActionPerformed
 
         if ((int) jTAffichage.getModel().getValueAt(jTAffichage.getSelectedRow(), 0) != -1) {
+            jLabel2.setIcon(null);
             new AnimalAddUpdateForm((int) jTAffichage.getModel().getValueAt(jTAffichage.getSelectedRow(), 0)).setVisible(true);
             this.setVisible(false);
         } else {
@@ -182,6 +229,10 @@ public class MainAnimalForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erreur", "Vous devez d'abord selectionner la ligne à modifier", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBDeleteActionPerformed
+
+    private void jTAffichagePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTAffichagePropertyChange
+      
+    }//GEN-LAST:event_jTAffichagePropertyChange
 
     /**
      * @param args the command line arguments
@@ -223,6 +274,7 @@ public class MainAnimalForm extends javax.swing.JFrame {
     private javax.swing.JButton jBDelete;
     private javax.swing.JButton jBUpdate;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTAffichage;

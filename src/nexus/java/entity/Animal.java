@@ -1,5 +1,6 @@
 package nexus.java.entity;
 
+import java.io.File;
 import java.util.Objects;
 
 public class Animal {
@@ -10,7 +11,7 @@ public class Animal {
     private String type;
     private String taille;
     private Integer age;
-    private byte[] image;
+    private File image;
     private String sexe;
     private String commentaire;
 
@@ -22,7 +23,7 @@ public class Animal {
         this.idAnimal = idAnimal;
     }
 
-    public Animal(int idAnimal, String espece, String couleur, String type, String taille, Integer age, byte[] image,
+    public Animal(int idAnimal, String espece, String couleur, String type, String taille, Integer age, File image,
             String sexe, String commentaire) {
         this.idAnimal = idAnimal;
         this.espece = espece;
@@ -83,11 +84,11 @@ public class Animal {
         this.age = age;
     }
 
-    public byte[] getImage() {
+    public File getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(File image) {
         this.image = image;
     }
 

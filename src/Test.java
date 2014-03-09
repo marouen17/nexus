@@ -1,4 +1,5 @@
 
+import nexus.java.dao.impl.AnimalDaoImpl;
 import nexus.java.utils.ReportGen;
 
 /*
@@ -13,6 +14,8 @@ import nexus.java.utils.ReportGen;
  */
 public class Test {
     public static void main(String[] args) {
-        ReportGen gen=new ReportGen("aa","Declaration.jrxml");
+        AnimalDaoImpl adi=new AnimalDaoImpl();
+        adi.readAll();
+        
     }
 }

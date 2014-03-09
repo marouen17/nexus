@@ -6,35 +6,33 @@
 package nexus.java.gui;
 
 import java.io.File;
-import java.io.FileInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import nexus.java.business.AnimalBo;
 import nexus.java.entity.Animal;
 
-
 /**
  *
  * @author MaruLanD
  */
 public class AnimalAddUpdateForm extends javax.swing.JFrame {
-    
+
     private AnimalBo animalBo = AnimalBo.getInstance();
     private boolean ifAdd = true;
-    
+
     Animal animal = new Animal();
-    
+
     public AnimalAddUpdateForm() {
         initComponents();
         jTFIdAnimal.setText((animalBo.getMaxID() + 1) + "");
-        
+
     }
-    
+
     public AnimalAddUpdateForm(int id) {
-        
+
         animal = animalBo.readByID(id);
-        
+
         initComponents();
         jTFIdAnimal.setText(animal.getIdAnimal() + "");
         jTFAge.setText(animal.getAge() + "");
@@ -48,10 +46,15 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
         }
         jTFTaille.setText(animal.getTaille());
         jCBType.setSelectedItem(animal.getType());
-        
+
         ifAdd = false;
         jBAdd.setText("Modifier");
         titre.setText("Modifier un animal");
+
+        ImageIcon ima = new ImageIcon(animal.getImage().getAbsolutePath());
+
+        jLabel2.setIcon(ima);
+        jLabel2.setSize(100, 100);
     }
 
     /**
@@ -91,6 +94,7 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
         titre = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jUrl = new javax.swing.JTextField();
 
         jInternalFrame1.setVisible(true);
 
@@ -166,7 +170,7 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
                 jBImgActionPerformed(evt);
             }
         });
-        JImage.add(jBImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 160, 20));
+        JImage.add(jBImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 80, 20));
 
         jCBType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chien", "Chat", "Hamster", "Oiseau", "Singe", "autre" }));
         JImage.add(jCBType, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 164, -1));
@@ -202,6 +206,9 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
         JImage.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, -1, -1));
         JImage.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
+        jUrl.setText("URL de l'image");
+        JImage.add(jUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 80, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -235,7 +242,7 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
         }
         animal.setTaille(jTFTaille.getText());
         animal.setType(jCBType.getSelectedItem().toString());
-        
+
         String errors = animalBo.verifAnimal(animal) + "\n" + animalBo.verifAnimal(animal);
         if (errors != null) {
             if (ifAdd) {
@@ -247,10 +254,10 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
                 this.setVisible(false);
                 new MainAnimalForm().setVisible(true);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Veuillez revérifier les champs suivants: \n" + errors, "Erreur", JOptionPane.ERROR_MESSAGE);
-            
+
         }
     }//GEN-LAST:event_jBAddActionPerformed
 
@@ -259,7 +266,7 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
             if (jTFAge.getText() != null) {
                 Integer.parseInt(jTFAge.getText());
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Vous ne pouvez saisir que des chiffres", "Age", JOptionPane.ERROR_MESSAGE);
             jTFAge.setText("");
@@ -268,27 +275,26 @@ public class AnimalAddUpdateForm extends javax.swing.JFrame {
 
     private void jBImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBImgActionPerformed
 
-try{
+        try {
             JFileChooser picchooser = new JFileChooser();
             int returnval = picchooser.showOpenDialog(null);
             File file = null;
-            if(returnval == JFileChooser.APPROVE_OPTION){
+            if (returnval == JFileChooser.APPROVE_OPTION) {
                 file = picchooser.getSelectedFile();
                 String filename = file.getAbsolutePath();
-                File pics = new File(filename);
+                // File pics = new File(filename);
                 ImageIcon ima = new ImageIcon(filename);
-                FileInputStream fistream1 = new FileInputStream (pics);
+                //FileInputStream fistream1 = new FileInputStream (pics);
+                animal.setImage(file);
                 jLabel2.setIcon(ima);
-                jLabel2.setSize(100,100);
-               
+                jLabel2.setSize(100, 100);
+                jUrl.setText(filename);
+
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 // pas de fichier choisi
-      
-
-
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jBImgActionPerformed
@@ -356,6 +362,7 @@ try{
     private javax.swing.JTextField jTFIdAnimal;
     private javax.swing.JTextField jTFTaille;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jUrl;
     private javax.swing.JLabel titre;
     // End of variables declaration//GEN-END:variables
 }
